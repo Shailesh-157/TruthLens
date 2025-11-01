@@ -8,13 +8,13 @@ export function DashboardHeader() {
   const [isDark, setIsDark] = useState(true);
 
   return (
-    <header className="h-20 bg-[hsl(220,35%,12%)] border-b border-border/40 flex items-center px-8 gap-8">
+    <header className="h-20 bg-sidebar-background border-b border-sidebar-border flex items-center px-8 gap-8">
       {/* Search Bar */}
       <div className="flex-1 max-w-xl relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
         <Input
           placeholder="Search news to verify..."
-          className="pl-10 bg-[hsl(220,30%,15%)] border-border/40 focus-visible:ring-cyan-400/50"
+          className="pl-10 bg-accent border-border focus-visible:ring-primary/50"
         />
       </div>
 
@@ -24,7 +24,7 @@ export function DashboardHeader() {
           variant="ghost"
           size="icon"
           onClick={() => setIsDark(!isDark)}
-          className="text-muted-foreground hover:text-foreground"
+          className="text-muted-foreground hover:text-sidebar-foreground hover:bg-sidebar-accent"
         >
           {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
         </Button>
@@ -32,7 +32,7 @@ export function DashboardHeader() {
         <Button
           variant="ghost"
           size="icon"
-          className="text-muted-foreground hover:text-foreground relative"
+          className="text-muted-foreground hover:text-sidebar-foreground hover:bg-sidebar-accent relative"
         >
           <Bell className="w-5 h-5" />
           <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
@@ -41,11 +41,11 @@ export function DashboardHeader() {
         {/* User Profile */}
         <div className="flex items-center gap-3">
           <div className="text-right">
-            <div className="text-sm font-medium text-foreground">Shailesh Pandey</div>
+            <div className="text-sm font-medium text-sidebar-foreground">Shailesh Pandey</div>
             <div className="text-xs text-muted-foreground">sp84233769@gmail.com</div>
           </div>
           <Avatar>
-            <AvatarFallback className="bg-blue-500 text-white">SP</AvatarFallback>
+            <AvatarFallback className="bg-primary text-primary-foreground">SP</AvatarFallback>
           </Avatar>
         </div>
       </div>

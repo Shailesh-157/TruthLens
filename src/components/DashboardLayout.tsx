@@ -20,15 +20,15 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   const location = useLocation();
 
   return (
-    <div className="min-h-screen bg-[hsl(220,30%,10%)] flex w-full">
+    <div className="min-h-screen bg-background flex w-full dark">
       {/* Sidebar */}
-      <aside className="w-60 bg-[hsl(220,35%,12%)] border-r border-border/40 flex flex-col">
+      <aside className="w-60 bg-sidebar-background border-r border-sidebar-border flex flex-col">
         {/* Logo */}
         <div className="p-6 flex items-center gap-3">
-          <div className="w-10 h-10 bg-cyan-500/20 rounded-lg flex items-center justify-center">
-            <Eye className="w-6 h-6 text-cyan-400" />
+          <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
+            <Eye className="w-6 h-6 text-primary" />
           </div>
-          <span className="text-xl font-bold text-foreground">TruthLens</span>
+          <span className="text-xl font-bold text-sidebar-foreground">TruthLens</span>
         </div>
 
         {/* Navigation */}
@@ -43,8 +43,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 className={cn(
                   "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors",
                   isActive
-                    ? "bg-cyan-400/20 text-cyan-400"
-                    : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
+                    ? "bg-primary/20 text-primary"
+                    : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground"
                 )}
               >
                 <Icon className="w-5 h-5" />

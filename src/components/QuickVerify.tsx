@@ -12,10 +12,10 @@ export function QuickVerify() {
   const [content, setContent] = useState("");
 
   return (
-    <Card className="bg-[hsl(220,30%,13%)] border-border/40 p-8">
+    <Card className="bg-card border-border shadow-card p-8">
       <div className="flex items-center gap-2 mb-6">
-        <Search className="w-5 h-5 text-cyan-400" />
-        <h2 className="text-xl font-semibold text-foreground">Quick Verify</h2>
+        <Search className="w-5 h-5 text-primary" />
+        <h2 className="text-xl font-semibold text-card-foreground">Quick Verify</h2>
       </div>
 
       {/* Tabs */}
@@ -27,8 +27,8 @@ export function QuickVerify() {
             className={cn(
               "px-6 py-2.5 rounded-lg font-medium transition-colors",
               activeTab === tab
-                ? "bg-[hsl(220,30%,18%)] text-foreground"
-                : "text-muted-foreground hover:text-foreground"
+                ? "bg-secondary text-secondary-foreground"
+                : "text-muted-foreground hover:text-card-foreground"
             )}
           >
             {tab}
@@ -41,11 +41,11 @@ export function QuickVerify() {
         placeholder="Paste news text or claim to verify..."
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        className="min-h-[150px] bg-[hsl(220,30%,10%)] border-border/40 resize-none focus-visible:ring-cyan-400/50 mb-4"
+        className="min-h-[150px] bg-input border-border resize-none focus-visible:ring-primary/50 mb-4"
       />
 
       {/* Switch Mode Button */}
-      <button className="w-full bg-[hsl(220,30%,10%)] border border-border/40 rounded-lg py-3 mb-6 flex items-center justify-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+      <button className="w-full bg-accent border border-border rounded-lg py-3 mb-6 flex items-center justify-center gap-2 text-muted-foreground hover:text-card-foreground transition-colors">
         <Link2 className="w-4 h-4" />
         Switch to URL Mode
       </button>

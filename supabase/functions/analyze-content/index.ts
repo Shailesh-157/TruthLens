@@ -102,14 +102,41 @@ Rules:
       throw new Error("Failed to parse AI response as JSON");
     }
 
-    // Add fact-check links
-    const factCheckLinks = [
-      { source: "Google Fact Check", url: `https://www.google.com/search?q=${encodeURIComponent(content.slice(0, 100))}+fact+check` },
+    // Fetch Google Fact Check results
+    let factCheckLinks = [
       { source: "FactCheck.org", url: "https://www.factcheck.org/" },
       { source: "Snopes", url: "https://www.snopes.com/" },
       { source: "AltNews (India)", url: "https://www.altnews.in/" },
       { source: "PIB Fact Check", url: "https://factcheck.pib.gov.in/" },
     ];
+
+    const googleApiKey = Deno.env.get("GOOGLE_FACT_CHECK_API_KEY");
+    if (googleApiKey) {
+      try {
+        const searchQuery = encodeURIComponent(content.substring(0, 200));
+        const factCheckUrl = `https://factchecktools.googleapis.com/v1alpha1/claims:search?query=${searchQuery}&key=${googleApiKey}`;
+        const factCheckResponse = await fetch(factCheckUrl);
+        
+        if (factCheckResponse.ok) {
+          const factCheckData = await factCheckResponse.json();
+          console.log("Google Fact Check API response:", JSON.stringify(factCheckData));
+          
+          if (factCheckData.claims && factCheckData.claims.length > 0) {
+            // Add Google Fact Check results to the beginning
+            const googleResults = factCheckData.claims.slice(0, 3).map((claim: any) => ({
+              source: claim.claimReview?.[0]?.publisher?.name || "Fact Checker",
+              url: claim.claimReview?.[0]?.url || "#",
+              rating: claim.claimReview?.[0]?.textualRating || "Unknown"
+            }));
+            factCheckLinks = [...googleResults, ...factCheckLinks];
+          }
+        } else {
+          console.error("Google Fact Check API error:", factCheckResponse.status, await factCheckResponse.text());
+        }
+      } catch (error) {
+        console.error("Google Fact Check API request failed:", error);
+      }
+    }
 
     return new Response(
       JSON.stringify({

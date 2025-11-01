@@ -81,86 +81,60 @@ const Challenge = () => {
   const progressPercentage = ((timeLeft / 30) * 100);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20 p-4">
-      <div className="container mx-auto max-w-3xl py-8">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <Button variant="ghost" onClick={() => navigate("/lobby")}>
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Lobby
+    <div className="min-h-screen p-4">
+      <div className="container mx-auto max-w-2xl py-8 space-y-6">
+        <div className="flex justify-between items-center">
+          <Button variant="ghost" size="sm" onClick={() => navigate("/lobby")}>
+            <ArrowLeft className="h-4 w-4" />
           </Button>
-          <div className="flex gap-4 items-center">
-            <Badge variant="secondary" className="text-lg px-4 py-2">
-              Score: {score}
-            </Badge>
-            <Badge variant="outline" className="text-lg px-4 py-2">
-              {currentIndex + 1} / {sampleNews.length}
-            </Badge>
+          <div className="flex gap-2 text-sm">
+            <Badge variant="secondary">Score: {score}</Badge>
+            <Badge variant="outline">{currentIndex + 1}/{sampleNews.length}</Badge>
           </div>
         </div>
 
-        {/* Timer */}
-        <Card className="mb-6">
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-4 mb-2">
-              <Clock className="h-5 w-5 text-primary" />
-              <span className="font-semibold">Time Remaining: {timeLeft}s</span>
+        <Card>
+          <CardContent className="pt-6 space-y-4">
+            <div className="flex items-center justify-between text-sm">
+              <span className="flex items-center gap-2">
+                <Clock className="h-4 w-4" />
+                {timeLeft}s
+              </span>
+              <Progress value={progressPercentage} className="h-1 w-32" />
             </div>
-            <Progress value={progressPercentage} className="h-2" />
+            
+            <p className="text-lg py-4">{currentNews.content}</p>
+
+            {!showResult ? (
+              <div className="grid grid-cols-2 gap-3">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  onClick={() => handleVote(true)}
+                >
+                  <ThumbsUp className="h-5 w-5" />
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  onClick={() => handleVote(false)}
+                >
+                  <ThumbsDown className="h-5 w-5" />
+                </Button>
+              </div>
+            ) : (
+              <div className="space-y-4 pt-4 border-t">
+                <div className={lastAnswer ? "text-green-600 font-semibold" : "text-red-600 font-semibold"}>
+                  {lastAnswer ? "✓ Correct" : "✗ Wrong"} - This is {currentNews.isReal ? "REAL" : "FAKE"}
+                </div>
+                <p className="text-sm text-muted-foreground">{currentNews.explanation}</p>
+                <Button onClick={handleNext} className="w-full">
+                  {currentIndex < sampleNews.length - 1 ? "Next" : "Finish"}
+                </Button>
+              </div>
+            )}
           </CardContent>
         </Card>
-
-        {/* News Content */}
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle>Is this news Real or Fake?</CardTitle>
-            <CardDescription>Read carefully and make your decision</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-lg leading-relaxed">{currentNews.content}</p>
-          </CardContent>
-        </Card>
-
-        {/* Voting Buttons */}
-        {!showResult ? (
-          <div className="grid grid-cols-2 gap-4">
-            <Button
-              size="lg"
-              variant="outline"
-              className="h-24 text-lg border-2 border-green-500 hover:bg-green-500 hover:text-white"
-              onClick={() => handleVote(true)}
-            >
-              <ThumbsUp className="mr-2 h-6 w-6" />
-              Real News
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="h-24 text-lg border-2 border-red-500 hover:bg-red-500 hover:text-white"
-              onClick={() => handleVote(false)}
-            >
-              <ThumbsDown className="mr-2 h-6 w-6" />
-              Fake News
-            </Button>
-          </div>
-        ) : (
-          <Card className={lastAnswer ? "border-green-500 border-2" : "border-red-500 border-2"}>
-            <CardHeader>
-              <CardTitle className={lastAnswer ? "text-green-600" : "text-red-600"}>
-                {lastAnswer ? "✓ Correct!" : "✗ Incorrect"}
-              </CardTitle>
-              <CardDescription>
-                This news is {currentNews.isReal ? "REAL" : "FAKE"}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-muted-foreground">{currentNews.explanation}</p>
-              <Button onClick={handleNext} className="w-full" size="lg">
-                {currentIndex < sampleNews.length - 1 ? "Next Challenge" : "Finish"}
-              </Button>
-            </CardContent>
-          </Card>
-        )}
       </div>
     </div>
   );

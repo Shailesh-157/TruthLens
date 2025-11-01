@@ -54,79 +54,33 @@ const Lobby = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20 p-4">
-      <div className="container mx-auto max-w-6xl py-8">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold">Game Lobby</h1>
-            <p className="text-muted-foreground">Welcome back, {user?.email}</p>
-          </div>
-          <Button variant="outline" onClick={handleSignOut}>
-            <LogOut className="mr-2 h-4 w-4" />
-            Sign Out
+    <div className="min-h-screen p-4">
+      <div className="container mx-auto max-w-2xl py-8 space-y-6">
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl font-bold">Lobby</h1>
+          <Button variant="ghost" size="sm" onClick={handleSignOut}>
+            <LogOut className="h-4 w-4" />
           </Button>
         </div>
 
-        {/* Main Content */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
-          {/* Quick Play Card */}
-          <Card className="border-2 border-primary">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Play className="h-6 w-6" />
-                Quick Play
-              </CardTitle>
-              <CardDescription>
-                Jump into a challenge and test your fact-checking skills
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button size="lg" className="w-full" onClick={handleStartGame}>
-                Start Challenge
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Stats Card */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Trophy className="h-6 w-6" />
-                Your Stats
-              </CardTitle>
-              <CardDescription>Track your progress</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">Total Games</span>
-                <Badge variant="secondary">0</Badge>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">Accuracy Rate</span>
-                <Badge variant="secondary">0%</Badge>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">Coins Earned</span>
-                <Badge variant="secondary">0</Badge>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Available Rooms */}
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Users className="h-6 w-6" />
-              Available Rooms
-            </CardTitle>
-            <CardDescription>Join a multiplayer room or create your own</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-center py-8 text-muted-foreground">
-              <p>No active rooms available</p>
-              <p className="text-sm mt-2">Coming soon: Create and join multiplayer rooms!</p>
+          <CardContent className="pt-6 space-y-4">
+            <Button size="lg" className="w-full" onClick={handleStartGame}>
+              Start Challenge
+            </Button>
+            <div className="grid grid-cols-3 gap-4 text-center pt-4 border-t">
+              <div>
+                <div className="text-2xl font-bold">0</div>
+                <div className="text-xs text-muted-foreground">Games</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold">0%</div>
+                <div className="text-xs text-muted-foreground">Accuracy</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold">0</div>
+                <div className="text-xs text-muted-foreground">Coins</div>
+              </div>
             </div>
           </CardContent>
         </Card>

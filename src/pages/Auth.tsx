@@ -99,14 +99,11 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-secondary/20 p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4 mx-auto">
-            <Shield className="w-8 h-8 text-primary" />
-          </div>
-          <CardTitle className="text-3xl">TruthLens</CardTitle>
-          <CardDescription>Join the fact-checking revolution</CardDescription>
+          <Shield className="w-12 h-12 text-primary mx-auto mb-4" />
+          <CardTitle className="text-2xl">TruthLens</CardTitle>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="signin" className="w-full">

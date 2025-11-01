@@ -9,16 +9,14 @@ const Index = () => {
         <Shield className="w-16 h-16 text-primary mx-auto" />
         <h1 className="text-6xl font-bold">TruthLens</h1>
         <p className="text-xl text-muted-foreground">
-          Gamify fact-checking. Detect lies. Learn truth.
+          AI-powered fact-checking tool
         </p>
-        <div className="flex gap-4 justify-center">
-          <Link to="/auth">
-            <Button size="lg">Get Started</Button>
-          </Link>
-          <Link to="/lobby">
-            <Button size="lg" variant="outline">Play Now</Button>
-          </Link>
-        </div>
+        <p className="text-muted-foreground">
+          Verify news articles and statements with AI analysis
+        </p>
+        <Link to="/check">
+          <Button size="lg">Start Checking</Button>
+        </Link>
       </div>
     </div>
   );

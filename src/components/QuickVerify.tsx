@@ -1,15 +1,65 @@
 import { useState } from "react";
-import { Search, Link2 } from "lucide-react";
+import { Search, Link2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { detectFakeNews } from "@/lib/detectFakeNews";
+import { VerificationResults } from "./VerificationResults";
+import { useToast } from "@/hooks/use-toast";
 
 const tabs = ["Text/URL", "Image", "Audio", "Video"];
 
 export function QuickVerify() {
   const [activeTab, setActiveTab] = useState("Text/URL");
   const [content, setContent] = useState("");
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [result, setResult] = useState<any>(null);
+  const { toast } = useToast();
+
+  const handleVerify = async () => {
+    if (!content.trim()) {
+      toast({
+        title: "Input required",
+        description: "Please enter some text or URL to verify",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsAnalyzing(true);
+    try {
+      const detectionResult = await detectFakeNews(content, "text");
+      setResult(detectionResult);
+    } catch (error) {
+      toast({
+        title: "Analysis failed",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
+  const handleNewVerification = () => {
+    setResult(null);
+    setContent("");
+  };
+
+  if (result) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-card-foreground">Verification Results</h2>
+          <Button onClick={handleNewVerification} variant="outline" className="border-border">
+            New Verification
+          </Button>
+        </div>
+        <VerificationResults {...result} />
+      </div>
+    );
+  }
 
   return (
     <Card className="bg-card border-border shadow-card p-8">
@@ -52,10 +102,21 @@ export function QuickVerify() {
 
       {/* Verify Button */}
       <Button
-        className="w-full h-12 bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600 text-white font-medium"
+        onClick={handleVerify}
+        disabled={isAnalyzing || !content.trim()}
+        className="w-full h-12 bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600 text-white font-medium disabled:opacity-50"
       >
-        <Search className="w-5 h-5 mr-2" />
-        Verify Now
+        {isAnalyzing ? (
+          <>
+            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+            Analyzing...
+          </>
+        ) : (
+          <>
+            <Search className="w-5 h-5 mr-2" />
+            Verify Now
+          </>
+        )}
       </Button>
 
       {/* Footer Text */}

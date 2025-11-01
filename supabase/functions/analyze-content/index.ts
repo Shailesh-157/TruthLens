@@ -55,12 +55,12 @@ Rules:
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+        model: "google/gemini-2.5-pro",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: `Analyze this content for misinformation:\n\n${content}` },
         ],
-        temperature: 0.3,
+        temperature: 0.2,
       }),
     });
 
